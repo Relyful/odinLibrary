@@ -4,12 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Document</title>
+    <title>Rely Anime List</title>
 </head>
 <body>
     <div class="container">
         <header>
-            <button type="button">New Book +</button>
+            <button id="newBookButt" type="button">New Book +</button>
+            <dialog>
+                <h3>Add new book!</h3>
+                <form id="newBook" method="dialog" action="#" >
+                    <div class="formRow">
+                        <label for="bokName">Book Name:</label>
+                        <input type="text" id="bokName" name="bokName">
+                    </div>
+
+                    <div class="formRow">
+                        <label for="bokAuthor">Author:</label>
+                        <input type="text" id="bokAuthor" name="bokAuthor">
+                    </div>
+                    
+                    <div class="formRow">
+                        <label for="bokPages">Pages:</label>
+                        <input type="number" id="bokPages" name="bokPages">
+                    </div>
+
+                    <div class="formRow">
+                        <label for="bokRead">Read the book:</label>
+                        <input type="checkbox" id="bokRead" name="bokRead" value="read">
+                    </div>
+
+                    <button type="submit" form="newBook">Save Book</button>
+                </form>
+            </dialog>
         </header>
         <main>
             <div class="bookContainer">

@@ -58,3 +58,8 @@ main {
     align-self: center;
     padding-right: 5%;
 }
+
+dialog {
+    position: fixed;
+    margin: auto;
+}
