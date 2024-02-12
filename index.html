@@ -39,25 +39,7 @@
         </header>
         <main>
             <div class="bookContainer">
-                <div class="bookCard">
-                    <div class="rowType">Title:</div><div class="bookName">Harry Potter</div>
-                    <div class="rowType">Author:</div><div class="bookAuthor">Rowling</div>
-                    <div class="rowType">Pages:</div><div class="bookPages">800</div>
-                    <div class="rowType">Read:</div><div class="unread"></div>
-                </div>
-
-                <div class="bookCard">
-                    <div class="rowType">Title:</div><div class="bookName">Lord of the Rings</div>
-                    <div class="rowType">Author:</div><div class="bookAuthor">J.R.R. Tolkien</div>
-                    <div class="rowType">Pages:</div><div class="bookPages">1337</div>
-                    <div class="rowType">Read:</div><div class="unread"></div>
-                </div>
-
-                <div class="bookCard">
-                    <div class="rowType">Title:</div><div class="bookName">World of Warcraft</div>
-                    <div class="rowType">Author:</div><div class="bookAuthor">Hazikostas</div>
-                    <div class="rowType">Pages:</div><div class="bookPages">350</div>
-                    <div class="rowType">Read:</div><div class="unread"></div>
+                
                 </div>
             </div>
         </main>
@@ -68,3 +50,12 @@
     <script src="script.js"></script>
 </body>
 </html>
+
+
+
+
+        <div class="rowType">Title:</div><div class="bookName">${book.title}</div> 
+        <div class="rowType">Author:</div><div class="bookAuthor">${book.author}</div> 
+        <div class="rowType">Pages:</div><div class="bookPages">${book.pages}</div> 
+        <div class="rowType">Read:</div><div class="bokRead">${book.read}</div>
+        <button class="deleteBook" type="button">Remove Book</button>

@@ -1,4 +1,6 @@
-const myLibrary = [];
+const myLibrary = [{title: "Harry Potter", author: "Rowling", pages: "1337", read: 'No'}, 
+{title: "Lord of the Rings", author: "J.R.R. Tolkien", pages: "800", read: 'No'},
+{title: "World of Warcraft", author: "Hazikostas", pages: "350", read: 'Yes'}];
 const bookContainer = document.querySelector('.bookContainer');
 const newBookButt = document.querySelector('#newBookButt');
 const dialog = document.querySelector('dialog');
@@ -18,21 +20,35 @@ function addBookToLibrary(myTitle, myAuthor, myPages, myRead) {   // add book ob
     listBooksOnPage();
 }
 
-function listBooksOnPage() {   // create .bookCard html element and append it on page
+function listBooksOnPage() {  
+    let x = 0; // create .bookCard html element and append it on page
     for (const book of myLibrary) {
         const newCard = document.createElement('div');
         newCard.classList.add('bookCard');
-        newCard.innerHTML = `<div class="rowType">Title:</div><div class="bookName">${book.title}</div> 
+        newCard.dataset.index = `${x++}`;
+        newCard.innerHTML = `<div class="bookInfo"><div class="rowType">Title:</div><div class="bookName">${book.title}</div> 
         <div class="rowType">Author:</div><div class="bookAuthor">${book.author}</div> 
         <div class="rowType">Pages:</div><div class="bookPages">${book.pages}</div> 
-        <div class="rowType">Read:</div><div class="bokRead">${book.read}</div>`;
-        bookContainer.appendChild(newCard);
+        <div class="rowType">Read:</div><div class="bokRead">${book.read}</div></div>
+        <button class="deleteBook" type="button">Remove Book</button>`;
+        bookContainer.appendChild(newCard);        
     }
+
+    const deleteBookButt = document.querySelectorAll('.deleteBook');
+    deleteBookButt.forEach((element) => element.addEventListener('click', e => {
+        deleteBook(e.target.parentNode.dataset.index);
+    }))
 }
 
 function clearContainer() {
     bookContainer.innerHTML = ' ';
 };
+
+function deleteBook(bookIndex) {
+    myLibrary.splice(bookIndex, 1);
+    clearContainer();
+    listBooksOnPage();
+}
 
 newBookButt.addEventListener("click", () => {    //New Book button event listener
     dialog.showModal();
@@ -49,3 +65,7 @@ dialogButt.addEventListener('click', () => {
 
     addBookToLibrary(bokName, bokAuthor, bokPages, bokRead);
 });
+
+
+
+listBooksOnPage();

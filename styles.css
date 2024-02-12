@@ -45,6 +45,11 @@ main {
     border-radius: 20px;
     background-color: aqua;
     padding: 3% 0 3% 3%;    
+}
+
+.bookInfo {
+    height: 130px;    
+    overflow: clip;
 
     display: grid;
     grid-template-columns: 1fr 3fr;
@@ -62,4 +67,6 @@ main {
 dialog {
     position: fixed;
     margin: auto;
+    width: 300px;
+    height: 300px;
 }
