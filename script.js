@@ -31,14 +31,20 @@ function listBooksOnPage() {
         <div class="rowType">Author:</div><div class="bookAuthor">${book.author}</div> 
         <div class="rowType">Pages:</div><div class="bookPages">${book.pages}</div> 
         <div class="rowType">Read:</div><div class="bokRead">${book.read}</div></div>
-        <button class="deleteBook" type="button">Remove Book</button>`;
+        <div class='buttonContainer'><button class="deleteBook" type="button">Remove Book</button>
+        <button class="changeRead" type="button">Read / Not</button></div>`;
         bookContainer.appendChild(newCard);        
     }
 
     const deleteBookButt = document.querySelectorAll('.deleteBook');
     deleteBookButt.forEach((element) => element.addEventListener('click', e => {
         deleteBook(e.target.parentNode.dataset.index);
-    }))
+    }));
+
+    const changeReadButt = document.querySelectorAll('.changeRead');
+    changeReadButt.forEach(elem => elem.addEventListener('click', (e) => {
+        changeRead(e.target.parentNode.parentNode.dataset.index);
+    }));
 }
 
 function clearContainer() {
@@ -47,6 +53,19 @@ function clearContainer() {
 
 function deleteBook(bookIndex) {
     myLibrary.splice(bookIndex, 1);
+    clearContainer();
+    listBooksOnPage();
+}
+
+function changeRead(bookIndex) {
+    let current = myLibrary[bookIndex].read;
+    if(current === 'No') {
+        myLibrary[bookIndex].read = 'Yes';
+    }
+    else {
+        myLibrary[bookIndex].read = 'No';
+    }
+
     clearContainer();
     listBooksOnPage();
 }
