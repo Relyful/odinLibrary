@@ -3,6 +3,7 @@ const myLibrary = [{title: "Harry Potter", author: "Rowling", pages: "1337", rea
 {title: "World of Warcraft", author: "Hazikostas", pages: "350", read: 'Yes'}];
 const bookContainer = document.querySelector('.bookContainer');
 const newBookButt = document.querySelector('#newBookButt');
+const newBookForm = document.querySelector(['#newBook']);
 const dialog = document.querySelector('dialog');
 const dialogButt = document.querySelector('dialog button');
 
@@ -54,7 +55,7 @@ newBookButt.addEventListener("click", () => {    //New Book button event listene
     dialog.showModal();
 });
 
-dialogButt.addEventListener('click', () => {
+dialogButt.addEventListener('click', () => {    
     let bokName = document.querySelector('dialog input#bokName').value;
     let bokAuthor = document.querySelector('dialog input#bokAuthor').value;
     let bokPages = document.querySelector('dialog input#bokPages').value;
@@ -64,6 +65,7 @@ dialogButt.addEventListener('click', () => {
     }
 
     addBookToLibrary(bokName, bokAuthor, bokPages, bokRead);
+    newBookForm.reset();
 });
 
 
