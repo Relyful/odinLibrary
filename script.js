@@ -96,11 +96,6 @@ newBookForm.addEventListener('submit', () => {
     newBookForm.reset();
 });
 
-// dialogButt.addEventListener('click', () => {    
-//     
-// });
-
-
 addBookToLibrary('Harry Potter', 'Rowling', '1337', 'No');
 addBookToLibrary('Lord of the Rings', 'J.R.R. Tolkien', '800', 'No');
 addBookToLibrary('World of Warcraft', 'Hazikostas', '350', 'Yes');
