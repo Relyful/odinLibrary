@@ -47,7 +47,7 @@ function listBooksOnPage() {
 
     const deleteBookButt = document.querySelectorAll('.deleteBook');
     deleteBookButt.forEach((element) => element.addEventListener('click', e => {
-        deleteBook(e.target.parentNode.dataset.index);
+        deleteBook(e.target.parentNode.parentNode.dataset.index);
     }));
 
     const changeReadButt = document.querySelectorAll('.changeRead');
@@ -64,6 +64,8 @@ function clearContainer() {
 };
 
 function deleteBook(bookIndex) {
+    console.log(bookIndex);
+    console.log(myLibrary[bookIndex]);
     myLibrary.splice(bookIndex, 1);
     clearContainer();
     listBooksOnPage();
