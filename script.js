@@ -1,17 +1,26 @@
-const myLibrary = [{title: "Harry Potter", author: "Rowling", pages: "1337", read: 'No'}, 
-{title: "Lord of the Rings", author: "J.R.R. Tolkien", pages: "800", read: 'No'},
-{title: "World of Warcraft", author: "Hazikostas", pages: "350", read: 'Yes'}];
+const myLibrary = [];
 const bookContainer = document.querySelector('.bookContainer');
 const newBookButt = document.querySelector('#newBookButt');
 const newBookForm = document.querySelector(['#newBook']);
 const dialog = document.querySelector('dialog');
 const dialogButt = document.querySelector('dialog button');
+const dialogCloseButt = document.querySelector('dialog .closeDialog');
+
 
 function Book(title, author, pages, read) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.read = read;
+}
+
+Book.prototype.changeRead = function() {
+    if(this.read === 'Yes') {
+        this.read = 'No';
+    }
+    else {
+        this.read = 'Yes';
+    }
 }
 
 function addBookToLibrary(myTitle, myAuthor, myPages, myRead) {   // add book object to array myLibrary    
@@ -43,7 +52,10 @@ function listBooksOnPage() {
 
     const changeReadButt = document.querySelectorAll('.changeRead');
     changeReadButt.forEach(elem => elem.addEventListener('click', (e) => {
-        changeRead(e.target.parentNode.parentNode.dataset.index);
+        let currentIndex = e.target.parentNode.parentNode.dataset.index;
+        myLibrary[currentIndex].changeRead();
+        clearContainer();
+        listBooksOnPage();
     }));
 }
 
@@ -57,22 +69,14 @@ function deleteBook(bookIndex) {
     listBooksOnPage();
 }
 
-function changeRead(bookIndex) {
-    let current = myLibrary[bookIndex].read;
-    if(current === 'No') {
-        myLibrary[bookIndex].read = 'Yes';
-    }
-    else {
-        myLibrary[bookIndex].read = 'No';
-    }
-
-    clearContainer();
-    listBooksOnPage();
-}
 
 newBookButt.addEventListener("click", () => {    //New Book button event listener
     dialog.showModal();
 });
+
+dialogCloseButt.addEventListener('click', () => {
+    dialog.close('kek');
+})
 
 dialogButt.addEventListener('click', () => {    
     let bokName = document.querySelector('dialog input#bokName').value;
@@ -88,5 +92,6 @@ dialogButt.addEventListener('click', () => {
 });
 
 
-
-listBooksOnPage();
+addBookToLibrary('Harry Potter', 'Rowling', '1337', 'No');
+addBookToLibrary('Lord of the Rings', 'J.R.R. Tolkien', '800', 'No');
+addBookToLibrary('World of Warcraft', 'Hazikostas', '350', 'Yes');

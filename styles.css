@@ -82,6 +82,32 @@ dialog {
     margin: auto;
     width: 300px;
     height: 300px;
+    padding: 25px;
+    background-color: #94B3FD;
+    color: white;
+    border-color:antiquewhite
+} 
+
+dialog h3 {
+    padding-bottom: 20px;
+}
+
+dialog form label {
+    display: flex;
+}
+
+dialog .closeDialog {
+    position: relative;
+}
+
+dialog .closeDialog::after {
+    content: 'X';
+    font-size: 1.5em;
+    color: rgb(241, 75, 192);
+    position: absolute;
+    left: 240px;
+    top: -46px;
+    cursor: pointer;
 }
 
 .buttonContainer {
