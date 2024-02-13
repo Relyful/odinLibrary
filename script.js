@@ -1,7 +1,7 @@
 const myLibrary = [];
 const bookContainer = document.querySelector('.bookContainer');
 const newBookButt = document.querySelector('#newBookButt');
-const newBookForm = document.querySelector(['#newBook']);
+const newBookForm = document.querySelector('#newBook');
 const dialog = document.querySelector('dialog');
 const dialogButt = document.querySelector('dialog button');
 const dialogCloseButt = document.querySelector('dialog .closeDialog');
@@ -78,7 +78,7 @@ dialogCloseButt.addEventListener('click', () => {
     dialog.close('kek');
 })
 
-dialogButt.addEventListener('click', () => {    
+newBookForm.addEventListener('submit', () => {
     let bokName = document.querySelector('dialog input#bokName').value;
     let bokAuthor = document.querySelector('dialog input#bokAuthor').value;
     let bokPages = document.querySelector('dialog input#bokPages').value;
@@ -87,9 +87,18 @@ dialogButt.addEventListener('click', () => {
         bokRead = 'Yes';
     }
 
+    if (isNaN(bokPages)) {
+        alert('Pages field must be a number!');
+        return;
+    }
+
     addBookToLibrary(bokName, bokAuthor, bokPages, bokRead);
     newBookForm.reset();
 });
+
+// dialogButt.addEventListener('click', () => {    
+//     
+// });
 
 
 addBookToLibrary('Harry Potter', 'Rowling', '1337', 'No');
