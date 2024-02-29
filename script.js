@@ -30,7 +30,7 @@ const library = new class {
         console.log(bookIndex);
         console.log(myLibrary[bookIndex]);
         myLibrary.splice(bookIndex, 1);
-        clearContainer();
+        this.clearContainer();
         this.listBooksOnPage();
     }
 
@@ -58,52 +58,22 @@ const library = new class {
         changeReadButt.forEach(elem => elem.addEventListener('click', (e) => {
             let currentIndex = e.target.parentNode.parentNode.dataset.index;
             myLibrary[currentIndex].changeRead();
-            clearContainer();
+            this.clearContainer();
             this.listBooksOnPage();
         }));
     }
+
+    addBookToLibrary(myTitle, myAuthor, myPages, myRead) {   // add book object to array myLibrary    
+        let bookObj = new Book(myTitle, myAuthor, myPages, myRead)  //Create new Book object
+        myLibrary.push(bookObj);  //push book object on to library array
+        this.clearContainer();
+        this.listBooksOnPage();
+    }
+
+    clearContainer() {
+        bookContainer.innerHTML = ' ';
+    };
 }
-
-function addBookToLibrary(myTitle, myAuthor, myPages, myRead) {   // add book object to array myLibrary    
-    let bookObj = new Book(myTitle, myAuthor, myPages, myRead)  //Create new Book object
-    myLibrary.push(bookObj);  //push book object on to library array
-    clearContainer();
-    library.listBooksOnPage();
-}
-
-// function listBooksOnPage() {  
-//     let x = 0; // create .bookCard html element and append it on page
-//     for (const book of myLibrary) {
-//         const newCard = document.createElement('div');
-//         newCard.classList.add('bookCard');
-//         newCard.dataset.index = `${x++}`;
-//         newCard.innerHTML = `<div class="bookInfo"><div class="rowType">Title:</div><div class="bookName">${book.title}</div> 
-//         <div class="rowType">Author:</div><div class="bookAuthor">${book.author}</div> 
-//         <div class="rowType">Pages:</div><div class="bookPages">${book.pages}</div> 
-//         <div class="rowType">Read:</div><div class="bokRead">${book.read}</div></div>
-//         <div class='buttonContainer'><button class="deleteBook" type="button">Remove Book</button>
-//         <button class="changeRead" type="button">Read / Not</button></div>`;
-//         bookContainer.appendChild(newCard);        
-//     }
-
-//     const deleteBookButt = document.querySelectorAll('.deleteBook');
-//     deleteBookButt.forEach((element) => element.addEventListener('click', e => {
-//         library.deleteBook(e.target.parentNode.parentNode.dataset.index);
-//     }));
-
-//     const changeReadButt = document.querySelectorAll('.changeRead');
-//     changeReadButt.forEach(elem => elem.addEventListener('click', (e) => {
-//         let currentIndex = e.target.parentNode.parentNode.dataset.index;
-//         myLibrary[currentIndex].changeRead();
-//         clearContainer();
-//         listBooksOnPage();
-//     }));
-// }
-
-function clearContainer() {
-    bookContainer.innerHTML = ' ';
-};
-
 
 newBookButt.addEventListener("click", () => {    //New Book button event listener
     dialog.showModal();
@@ -127,10 +97,10 @@ newBookForm.addEventListener('submit', () => {
         return;
     }
 
-    addBookToLibrary(bokName, bokAuthor, bokPages, bokRead);
+    library.addBookToLibrary(bokName, bokAuthor, bokPages, bokRead);
     newBookForm.reset();
 });
 
-addBookToLibrary('Harry Potter', 'Rowling', '1337', 'No');
-addBookToLibrary('Lord of the Rings', 'J.R.R. Tolkien', '800', 'No');
-addBookToLibrary('World of Warcraft', 'Hazikostas', '350', 'Yes');
+library.addBookToLibrary('Harry Potter', 'Rowling', '1337', 'No');
+library.addBookToLibrary('Lord of the Rings', 'J.R.R. Tolkien', '800', 'No');
+library.addBookToLibrary('World of Warcraft', 'Hazikostas', '350', 'Yes');
