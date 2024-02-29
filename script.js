@@ -7,20 +7,27 @@ const dialogButt = document.querySelector('dialog button');
 const dialogCloseButt = document.querySelector('dialog .closeDialog');
 
 
-function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
+class Book {    
+    constructor(title, author, pages, read) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    }
+
+    changeRead = () => {
+        console.log('Im inside class');
+        if(this.read === 'Yes') {
+            this.read = 'No';
+        }
+        else {
+            this.read = 'Yes';
+        }
+    }
 }
 
-Book.prototype.changeRead = function() {
-    if(this.read === 'Yes') {
-        this.read = 'No';
-    }
-    else {
-        this.read = 'Yes';
-    }
+const library = class {
+    
 }
 
 function addBookToLibrary(myTitle, myAuthor, myPages, myRead) {   // add book object to array myLibrary    
