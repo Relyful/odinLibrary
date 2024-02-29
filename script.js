@@ -31,7 +31,36 @@ const library = new class {
         console.log(myLibrary[bookIndex]);
         myLibrary.splice(bookIndex, 1);
         clearContainer();
-        listBooksOnPage();
+        this.listBooksOnPage();
+    }
+
+    listBooksOnPage() {  
+        let x = 0; // create .bookCard html element and append it on page
+        for (const book of myLibrary) {
+            const newCard = document.createElement('div');
+            newCard.classList.add('bookCard');
+            newCard.dataset.index = `${x++}`;
+            newCard.innerHTML = `<div class="bookInfo"><div class="rowType">Title:</div><div class="bookName">${book.title}</div> 
+            <div class="rowType">Author:</div><div class="bookAuthor">${book.author}</div> 
+            <div class="rowType">Pages:</div><div class="bookPages">${book.pages}</div> 
+            <div class="rowType">Read:</div><div class="bokRead">${book.read}</div></div>
+            <div class='buttonContainer'><button class="deleteBook" type="button">Remove Book</button>
+            <button class="changeRead" type="button">Read / Not</button></div>`;
+            bookContainer.appendChild(newCard);        
+        }
+    
+        const deleteBookButt = document.querySelectorAll('.deleteBook');
+        deleteBookButt.forEach((element) => element.addEventListener('click', e => {
+            library.deleteBook(e.target.parentNode.parentNode.dataset.index);
+        }));
+    
+        const changeReadButt = document.querySelectorAll('.changeRead');
+        changeReadButt.forEach(elem => elem.addEventListener('click', (e) => {
+            let currentIndex = e.target.parentNode.parentNode.dataset.index;
+            myLibrary[currentIndex].changeRead();
+            clearContainer();
+            this.listBooksOnPage();
+        }));
     }
 }
 
@@ -39,49 +68,41 @@ function addBookToLibrary(myTitle, myAuthor, myPages, myRead) {   // add book ob
     let bookObj = new Book(myTitle, myAuthor, myPages, myRead)  //Create new Book object
     myLibrary.push(bookObj);  //push book object on to library array
     clearContainer();
-    listBooksOnPage();
+    library.listBooksOnPage();
 }
 
-function listBooksOnPage() {  
-    let x = 0; // create .bookCard html element and append it on page
-    for (const book of myLibrary) {
-        const newCard = document.createElement('div');
-        newCard.classList.add('bookCard');
-        newCard.dataset.index = `${x++}`;
-        newCard.innerHTML = `<div class="bookInfo"><div class="rowType">Title:</div><div class="bookName">${book.title}</div> 
-        <div class="rowType">Author:</div><div class="bookAuthor">${book.author}</div> 
-        <div class="rowType">Pages:</div><div class="bookPages">${book.pages}</div> 
-        <div class="rowType">Read:</div><div class="bokRead">${book.read}</div></div>
-        <div class='buttonContainer'><button class="deleteBook" type="button">Remove Book</button>
-        <button class="changeRead" type="button">Read / Not</button></div>`;
-        bookContainer.appendChild(newCard);        
-    }
+// function listBooksOnPage() {  
+//     let x = 0; // create .bookCard html element and append it on page
+//     for (const book of myLibrary) {
+//         const newCard = document.createElement('div');
+//         newCard.classList.add('bookCard');
+//         newCard.dataset.index = `${x++}`;
+//         newCard.innerHTML = `<div class="bookInfo"><div class="rowType">Title:</div><div class="bookName">${book.title}</div> 
+//         <div class="rowType">Author:</div><div class="bookAuthor">${book.author}</div> 
+//         <div class="rowType">Pages:</div><div class="bookPages">${book.pages}</div> 
+//         <div class="rowType">Read:</div><div class="bokRead">${book.read}</div></div>
+//         <div class='buttonContainer'><button class="deleteBook" type="button">Remove Book</button>
+//         <button class="changeRead" type="button">Read / Not</button></div>`;
+//         bookContainer.appendChild(newCard);        
+//     }
 
-    const deleteBookButt = document.querySelectorAll('.deleteBook');
-    deleteBookButt.forEach((element) => element.addEventListener('click', e => {
-        library.deleteBook(e.target.parentNode.parentNode.dataset.index);
-    }));
+//     const deleteBookButt = document.querySelectorAll('.deleteBook');
+//     deleteBookButt.forEach((element) => element.addEventListener('click', e => {
+//         library.deleteBook(e.target.parentNode.parentNode.dataset.index);
+//     }));
 
-    const changeReadButt = document.querySelectorAll('.changeRead');
-    changeReadButt.forEach(elem => elem.addEventListener('click', (e) => {
-        let currentIndex = e.target.parentNode.parentNode.dataset.index;
-        myLibrary[currentIndex].changeRead();
-        clearContainer();
-        listBooksOnPage();
-    }));
-}
+//     const changeReadButt = document.querySelectorAll('.changeRead');
+//     changeReadButt.forEach(elem => elem.addEventListener('click', (e) => {
+//         let currentIndex = e.target.parentNode.parentNode.dataset.index;
+//         myLibrary[currentIndex].changeRead();
+//         clearContainer();
+//         listBooksOnPage();
+//     }));
+// }
 
 function clearContainer() {
     bookContainer.innerHTML = ' ';
 };
-
-// function deleteBook(bookIndex) {
-//     console.log(bookIndex);
-//     console.log(myLibrary[bookIndex]);
-//     myLibrary.splice(bookIndex, 1);
-//     clearContainer();
-//     listBooksOnPage();
-// }
 
 
 newBookButt.addEventListener("click", () => {    //New Book button event listener
