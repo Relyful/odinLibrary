@@ -15,8 +15,7 @@ class Book {
         this.read = read;
     }
 
-    changeRead = () => {
-        console.log('Im inside class');
+    changeRead() {        
         if(this.read === 'Yes') {
             this.read = 'No';
         }
@@ -27,24 +26,25 @@ class Book {
 }
 
 const library = new class {
-    addBookToLibrary(myTitle, myAuthor, myPages, myRead) {   // add book object to array myLibrary    
-        let bookObj = new Book(myTitle, myAuthor, myPages, myRead)  //Create new Book object
-        myLibrary.push(bookObj);  //push book object on to library array
+    deleteBook(bookIndex) {
+        console.log(bookIndex);
+        console.log(myLibrary[bookIndex]);
+        myLibrary.splice(bookIndex, 1);
         clearContainer();
         listBooksOnPage();
     }
-
-
 }
 
-
-function clearContainer() {
-    bookContainer.innerHTML = ' ';
-};
+function addBookToLibrary(myTitle, myAuthor, myPages, myRead) {   // add book object to array myLibrary    
+    let bookObj = new Book(myTitle, myAuthor, myPages, myRead)  //Create new Book object
+    myLibrary.push(bookObj);  //push book object on to library array
+    clearContainer();
+    listBooksOnPage();
+}
 
 function listBooksOnPage() {  
     let x = 0; // create .bookCard html element and append it on page
-    for (let book of myLibrary) {
+    for (const book of myLibrary) {
         const newCard = document.createElement('div');
         newCard.classList.add('bookCard');
         newCard.dataset.index = `${x++}`;
@@ -55,32 +55,34 @@ function listBooksOnPage() {
         <div class='buttonContainer'><button class="deleteBook" type="button">Remove Book</button>
         <button class="changeRead" type="button">Read / Not</button></div>`;
         bookContainer.appendChild(newCard);        
-    }       
+    }
+
+    const deleteBookButt = document.querySelectorAll('.deleteBook');
+    deleteBookButt.forEach((element) => element.addEventListener('click', e => {
+        library.deleteBook(e.target.parentNode.parentNode.dataset.index);
+    }));
+
+    const changeReadButt = document.querySelectorAll('.changeRead');
+    changeReadButt.forEach(elem => elem.addEventListener('click', (e) => {
+        let currentIndex = e.target.parentNode.parentNode.dataset.index;
+        myLibrary[currentIndex].changeRead();
+        clearContainer();
+        listBooksOnPage();
+    }));
 }
 
-function deleteBook(bookIndex) {
-    console.log(bookIndex);
-    console.log(myLibrary[bookIndex]);
-    myLibrary.splice(bookIndex, 1);
-    clearContainer();
-    listBooksOnPage();
-}
+function clearContainer() {
+    bookContainer.innerHTML = ' ';
+};
 
+// function deleteBook(bookIndex) {
+//     console.log(bookIndex);
+//     console.log(myLibrary[bookIndex]);
+//     myLibrary.splice(bookIndex, 1);
+//     clearContainer();
+//     listBooksOnPage();
+// }
 
-const deleteBookButt = document.querySelectorAll('.deleteBook');
-        
-deleteBookButt.forEach((element) => element.addEventListener('click', e => {
-    deleteBook(e.target.parentNode.parentNode.dataset.index);
-}));
-    
-const changeReadButt = document.querySelectorAll('.changeRead');
-        
-changeReadButt.forEach(elem => elem.addEventListener('click', (e) => {
-    let currentIndex = e.target.parentNode.parentNode.dataset.index;
-    myLibrary[currentIndex].changeRead();
-    clearContainer();
-    listBooksOnPage();
-}));
 
 newBookButt.addEventListener("click", () => {    //New Book button event listener
     dialog.showModal();
@@ -104,10 +106,10 @@ newBookForm.addEventListener('submit', () => {
         return;
     }
 
-    library.addBookToLibrary(bokName, bokAuthor, bokPages, bokRead);
+    addBookToLibrary(bokName, bokAuthor, bokPages, bokRead);
     newBookForm.reset();
 });
 
-library.addBookToLibrary('Harry Potter', 'Rowling', '1337', 'No');
-library.addBookToLibrary('Lord of the Rings', 'J.R.R. Tolkien', '800', 'No');
-library.addBookToLibrary('World of Warcraft', 'Hazikostas', '350', 'Yes');
+addBookToLibrary('Harry Potter', 'Rowling', '1337', 'No');
+addBookToLibrary('Lord of the Rings', 'J.R.R. Tolkien', '800', 'No');
+addBookToLibrary('World of Warcraft', 'Hazikostas', '350', 'Yes');
