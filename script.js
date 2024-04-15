@@ -6,6 +6,8 @@ const dialog = document.querySelector('dialog');
 const dialogButt = document.querySelector('dialog button');
 const dialogCloseButt = document.querySelector('dialog .closeDialog');
 const bokNameInput = document.querySelector('dialog input#bokName')
+const bokAuthorInput = document.querySelector('dialog input#bokAuthor');
+const bokPagesInput = document.querySelector('dialog input#bokPages');
 
 
 class Book {    
@@ -103,7 +105,7 @@ newBookForm.addEventListener('submit', () => {
 });
 
 bokNameInput.addEventListener('input', (event) => {
-    if (!bokNameInput.checkValidity()) {
+    if (bokNameInput.validity.valueMissing) {
         bokNameInput.setCustomValidity('You did not enter a book name!');
     }
     else {
@@ -111,9 +113,14 @@ bokNameInput.addEventListener('input', (event) => {
     }
 })
 
-
-
-
+bokAuthorInput.addEventListener('input', (event) => {
+    if (bokAuthorInput.validity.valueMissing) {
+        bokAuthorInput.setCustomValidity('You did not enter a book author!');
+    }
+    else {
+        bokAuthorInput.setCustomValidity('');
+    }
+})
 
 library.addBookToLibrary('Harry Potter', 'Rowling', '1337', 'No');
 library.addBookToLibrary('Lord of the Rings', 'J.R.R. Tolkien', '800', 'No');
