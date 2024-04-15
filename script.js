@@ -5,6 +5,7 @@ const newBookForm = document.querySelector('#newBook');
 const dialog = document.querySelector('dialog');
 const dialogButt = document.querySelector('dialog button');
 const dialogCloseButt = document.querySelector('dialog .closeDialog');
+const bokNameInput = document.querySelector('dialog input#bokName')
 
 
 class Book {    
@@ -92,14 +93,27 @@ newBookForm.addEventListener('submit', () => {
         bokRead = 'Yes';
     }
 
-    if (isNaN(bokPages)) {
-        alert('Pages field must be a number!');
-        return;
-    }
+    // if (isNaN(bokPages)) {
+    //     alert('Pages field must be a number!');
+    //     return;
+    // }
 
     library.addBookToLibrary(bokName, bokAuthor, bokPages, bokRead);
     newBookForm.reset();
 });
+
+bokNameInput.addEventListener('input', (event) => {
+    if (!bokNameInput.checkValidity()) {
+        bokNameInput.setCustomValidity('You did not enter a book name!');
+    }
+    else {
+        bokNameInput.setCustomValidity('');
+    }
+})
+
+
+
+
 
 library.addBookToLibrary('Harry Potter', 'Rowling', '1337', 'No');
 library.addBookToLibrary('Lord of the Rings', 'J.R.R. Tolkien', '800', 'No');
