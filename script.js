@@ -5,7 +5,7 @@ const newBookForm = document.querySelector('#newBook');
 const dialog = document.querySelector('dialog');
 const dialogButt = document.querySelector('dialog button');
 const dialogCloseButt = document.querySelector('dialog .closeDialog');
-const bokNameInput = document.querySelector('dialog input#bokName')
+const bokNameInput = document.querySelector('dialog input#bokName');
 const bokAuthorInput = document.querySelector('dialog input#bokAuthor');
 const bokPagesInput = document.querySelector('dialog input#bokPages');
 
@@ -86,41 +86,50 @@ dialogCloseButt.addEventListener('click', () => {
     dialog.close('kek');
 })
 
-newBookForm.addEventListener('submit', () => {
+newBookForm.addEventListener('submit', (event) => {
     let bokName = document.querySelector('dialog input#bokName').value;
     let bokAuthor = document.querySelector('dialog input#bokAuthor').value;
     let bokPages = document.querySelector('dialog input#bokPages').value;
     let bokRead = 'No';
-    if(document.querySelector('dialog input#bokRead').checked) {
-        bokRead = 'Yes';
+    if (bokNameInput.validity.valueMissing || bokAuthorInput.validity.valueMissing || bokPagesInput.validity.valueMissing || bokPagesInput.validity.typeMismatch) {
+        event.preventDefault(); // Prevent form submission
+        if (bokNameInput.validity.valueMissing) {
+            bokNameInput.setCustomValidity('You did not enter a book name!');
+            bokNameInput.reportValidity();
+        } else {
+            bokNameInput.setCustomValidity('');
+        }
+
+        if (bokAuthorInput.validity.valueMissing) {
+            bokAuthorInput.setCustomValidity('You did not enter a book author!');
+            bokAuthorInput.reportValidity();
+        } else {
+            bokAuthorInput.setCustomValidity('');
+        }
+
+        if (bokPagesInput.validity.valueMissing) {
+            bokPagesInput.setCustomValidity('You did not enter the number of pages!');
+            bokPagesInput.reportValidity();
+        } else {
+            bokPagesInput.setCustomValidity('');
+        }
+
+        if (bokPagesInput.validity.typeMismatch) {
+            bokPagesInput.setCustomValidity('You need to enter a number!');
+            bokPagesInput.reportValidity();
+        }
+        else {
+            bokPagesInput.setCustomValidity('');
+        }
+    } else {
+        if(document.querySelector('dialog input#bokRead').checked) {
+            bokRead = 'Yes';
+        }
+        library.addBookToLibrary(bokName, bokAuthor, bokPages, bokRead);
+        newBookForm.reset();
+        dialog.close();
     }
-
-    // if (isNaN(bokPages)) {
-    //     alert('Pages field must be a number!');
-    //     return;
-    // }
-
-    library.addBookToLibrary(bokName, bokAuthor, bokPages, bokRead);
-    newBookForm.reset();
 });
-
-bokNameInput.addEventListener('input', (event) => {
-    if (bokNameInput.validity.valueMissing) {
-        bokNameInput.setCustomValidity('You did not enter a book name!');
-    }
-    else {
-        bokNameInput.setCustomValidity('');
-    }
-})
-
-bokAuthorInput.addEventListener('input', (event) => {
-    if (bokAuthorInput.validity.valueMissing) {
-        bokAuthorInput.setCustomValidity('You did not enter a book author!');
-    }
-    else {
-        bokAuthorInput.setCustomValidity('');
-    }
-})
 
 library.addBookToLibrary('Harry Potter', 'Rowling', '1337', 'No');
 library.addBookToLibrary('Lord of the Rings', 'J.R.R. Tolkien', '800', 'No');
